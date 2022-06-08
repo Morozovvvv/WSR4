@@ -1,0 +1,344 @@
+ОКНО ВХОДА 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading; // для таймера
+
+namespace test
+{
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+      public  DispatcherTimer timer = new DispatcherTimer(); // таймер
+        public MainWindow()
+        {
+            InitializeComponent();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += capchatimer;
+            
+        }
+        int intrerv = 10; // сколько секунд будет идти таймер 
+       public void capchatimer(object sender, EventArgs e)
+        {
+            intrerv--;
+            if (intrerv == 0)
+            {
+                timer.Stop();
+                intrerv = 10;
+                buttonVxod.IsEnabled = false; // кнопка после 10 секунд не активна 
+            }
+            secondsLabel.Content = Convert.ToString(intrerv); // ввывод секунд в label
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (textBoxLogin.Text=="admin" & textBoxPassword.Text=="admin")
+            {
+                if (textBoxCapcha.Text == capchaNety.Text)
+                {
+                    Form1 fr = new Form1();
+                    fr.Show();
+                    fr.button1.Visible = true;  // делаем чтобы в Form1 были доступны кнопки для разных пользователей 
+                    this.Close();
+                    Window1 w1 = new Window1(null);
+                    w1.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Капча введена неверно");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Неправельный логин или пароль");
+            }
+            
+        }
+
+        private void textBoxLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string v;                 
+            Random rd = new Random();
+            int cap = rd.Next(100, 999);
+            v = Convert.ToString(cap);
+            capchaNety.Text = Convert.ToString(cap);
+            Window1 w1 = new Window1(v); // передаём данные 
+            w1.Show();
+            buttonVxod.IsEnabled = true; // делаем кнопку активной 
+            timer.Start();
+
+        }
+    }
+}
+
+2ое ОКНО ГДЕ БУДЕТ ПОКАХАНА КАПЧА 
+
+sing System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace test
+{
+    /// <summary>
+    /// Логика взаимодействия для Window1.xaml
+    /// </summary>
+    public partial class Window1 : Window
+    {
+        public Window1(string v)
+        {
+            InitializeComponent();
+            Capcha.Content = v; // передаем значение капчи в label
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+           
+        }
+    }
+}
+
+
+ОКНО С ТАБЛИЦАМИ БД 
+
+ private void button3_Click(object sender, EventArgs e)
+        {
+            manufacturerDataGridView.Visible = false;  // при нажатие кнопки скрывает таблицу БД 
+            clientDataGridView.Visible = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            manufacturerDataGridView.Visible = true; // при нажатие кнопки скрывает таблицу БД 
+            clientDataGridView.Visible = false;
+        }
+
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+ДРУГОЙ ВХОД 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+
+namespace WpfApp14
+{
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        DispatcherTimer timer = new DispatcherTimer();
+        public MainWindow()
+        {
+            InitializeComponent();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += timer_Tick;
+
+        }
+        int intrerv = 10;
+        void timer_Tick(object sender, EventArgs e)
+        {
+            intrerv--;
+            if (intrerv == 0)
+            {
+                
+                
+
+                timer.Stop();
+                intrerv = 10;
+                refreshNeGen.Visibility = Visibility.Hidden;
+            }
+
+            vxod.Content = "Блокировка авторизации " + intrerv.ToString() + " секунд";
+
+
+        }
+
+        private void vxod_Click(object sender, RoutedEventArgs e)
+        {
+            string login = "xd";
+            string pass = "xd";
+
+            if (Loginn.Text == login)
+            {
+                if (passwordd.Password == pass)
+                {
+                    if (refreshGen.Text == refreshNeGen.Text)
+                    {
+                        Form1 fr = new Form1();
+                        fr.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Капча неверная");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Пароль неверная");
+                }
+            }
+            else
+            {
+                MessageBox.Show("логин неверная");
+            }
+        }
+
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            Random rd = new Random();
+            int cap = rd.Next(100, 999);
+            refreshGen.Text = Convert.ToString(cap);
+            
+            timer.Start();
+            refreshNeGen.Visibility = Visibility.Visible;
+        }
+
+       
+    }
+}
+
+
+==============================================================================
+
+Entity Framework
+
+
+
+модел.кс
+
+ private static prakticka1Entities2 _context;
+        
+ 
+
+      public static prakticka1Entities2 GetContext()
+        {
+            if (_context == null)
+                _context = new prakticka1Entities2();
+            return _context;
+        }
+
+
+xml data grid 
+
+
+<DataGrid.Columns>
+                        <DataGridTextColumn Header="Фио" Binding="{Binding ФИО}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Специальность" Binding="{Binding Специальность}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Посещаемость" Binding="{Binding Посещаемость}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Номер студента" Binding="{Binding id}" Width="*"></DataGridTextColumn>
+                      
+
+ </DataGrid.Columns>
+
+
+обновление бд
+
+praticka1Entities2.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+            DTysp.ItemsSource = prakticka1Entities2.GetContext().posesha.ToList();
+
+
+редактирование в бд 
+
+ WindowAdd add = new WindowAdd((sender as Button).DataContext as posesha);
+            add.Show();
+
+добавление в бд кнопка 
+
+WindowAdd add = new WindowAdd(null);
+            add.Show();
+
+удаление в бд 
+
+var poseshaForRemoving = DTysp.SelectedItems.Cast<posesha>().ToList();
+            
+                    prakticka1Entities2.GetContext().posesha.RemoveRange(poseshaForRemoving);
+                    prakticka1Entities2.GetContext().SaveChanges();
+                    MessageBox.Show("Данные удалены");
+               
+
+
+xml 
+
+        <Label Content="Фио" HorizontalAlignment="Left" Margin="24,23,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="165,23,0,0" TextWrapping="Wrap" Text="{Binding ФИО}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Специальность" HorizontalAlignment="Left" Margin="24,63,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="165,64,0,0" TextWrapping="Wrap" Text="{Binding Специальность}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Посещаемость" HorizontalAlignment="Left" Margin="24,114,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="165,115,0,0" TextWrapping="Wrap" Text="{Binding Посещаемость}" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Сохранть" HorizontalAlignment="Left" Margin="104,208,0,0" VerticalAlignment="Top" Width="96" Background="#FF95C11C" BorderBrush="#FF008BFF" Foreground="White" FontFamily="Times New Roman" Height="28" Click="Button_Click"/>
+        <Label Content="Номер студента" HorizontalAlignment="Left" Margin="24,175,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="165,169,0,0" TextWrapping="Wrap" Text="{Binding id}" VerticalAlignment="Top" Width="120"/>
+
+окно добавление 
+
+   private posesha _currentposesha = new posesha();
+        public WindowAdd(posesha selectedposesha)
+        {
+            InitializeComponent();
+
+            if (selectedposesha != null)
+                _currentposesha = selectedposesha;
+            DataContext = _currentposesha;
+        }
+кнопка сохранения 
+
+
+ychebaEntities.Getcontext().uslugi.Add(_currentuslugi);
+            ychebaEntities.Getcontext().SaveChanges();
+            MessageBox.Show("Успешно добавлено");
+            this.Close();
+
+
+
+
+
+
+
+

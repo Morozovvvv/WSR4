@@ -1,0 +1,36 @@
+OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter = "Image files (*.BMP, *.JPG, *.GIF, *.TIF, *.PNG, *.ICO, *.EMF, *.WMF)|*.bmp;*.jpg;*.gif; *.tif; *.png; *.ico; *.emf; *.wmf";
+
+            if (openDialog.ShowDialog() == true)
+            {
+
+                _contract.Image = openDialog.FileName;
+                imgActor.Source = new BitmapImage(new Uri(_contract.Image));
+
+            }
+
+Капча
+
+char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789".ToCharArray();
+            string randomString = "";
+            Random ran = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                randomString += chars[ran.Next(0, chars.Length)];
+            }
+            genCaptchaBox.Content = randomString;
+
+
+DataTable dt_users = command.Select("SELECT * FROM [dbo].[StaffInfo]");
+                        for (int i = 0; i < dt_users.Rows.Count; i++) // перебираем данные  
+                        {
+                            if (logBox.Text == dt_users.Rows[i][0].ToString())
+                            {                                
+                                mainWindow.staff.FIO = dt_users.Rows[i][2].ToString();
+                                mainWindow.staff.Position = dt_users.Rows[i][3].ToString();
+                                mainWindow.staff.Photo = dt_users.Rows[i][4].ToString();                               
+                            }
+                        }
+                        mainWindow.OpenPage(MainWindow.pages.employeePage);
+
+
